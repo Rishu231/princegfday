@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Girlfriend's Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #5a0b26; /* Dark maroon background */
+            --card-bg: #fff5f8; /* Light pink card base */
+            --text-main: #333;
+            --accent: #d43b68;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Main Phone/Card Container */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: var(--card-bg);
+            height: 100vh;
+            max-height: 900px;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        @media (min-width: 450px) {
+            .app-container {
+                height: 90vh;
+                border-radius: 20px;
+                border: 8px solid #333;
+            }
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            padding: 30px 20px;
+            min-height: 100%;
+            animation: fadeIn 0.8s ease-in-out;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(212, 59, 104, 0.3);
+            z-index: 10;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #b02a52;
+        }
+
+        .nav-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 30px;
+            z-index: 10;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid #ccc;
+        }
+
+        /* --- Screen 1: The Envelope --- */
+        #screen1 {
+            justify-content: center;
+            background: linear-gradient(to bottom, #fff5f8, #fce4ec);
+        }
+        
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #f8cdd6;
+            border-radius: 10px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .seal {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 59, 104, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(212, 59, 104, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 59, 104, 0); }
+        }
+
+        /* --- Screen 2 & 5: Polaroids --- */
+        .polaroid-main {
+            background: white;
+            padding: 15px;
+            padding-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+            transform: rotate(-2deg);
+            width: 100%;
+        }
+        .polaroid-main img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* --- Screen 3: Letter --- */
+        .letter-container {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .letter-header {
+            padding: 20px;
+            background-color: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .letter-body {
+            padding: 20px;
+            min-height: 250px;
+            background-image: repeating-linear-gradient(transparent, transparent 29px, #eee 30px);
+            line-height: 30px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #444;
+        }
+
+        /* --- Screen 4: Scrapbook --- */
+        .scrapbook-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .polaroid-small {
+            background: white;
+            padding: 8px;
+            padding-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .polaroid-small img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+        .polaroid-small p {
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.1rem;
+            left: 0;
+        }
+
+        .rotate-left { transform: rotate(-4deg); }
+        .rotate-right { transform: rotate(3deg); }
+
+        .reasons-box {
+            grid-column: span 2;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .reasons-box ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .reasons-box li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .reasons-box li::before {
+            content: "❤️";
+            margin-right: 8px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Screen 6: Final Slide --- */
+        .final-message {
+            margin-top: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+        .circle-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: -70px auto 20px auto;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatUp 4s infinite ease-in;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2) rotate(20deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <!-- Slide 1: Cover -->
+    <div id="screen1" class="screen active">
+        <br><br>
+        <h1>Happy Girlfriend's Day</h1>
+        <p class="cursive" style="margin-top: 10px;">opening...</p>
+        
+        <div class="envelope-wrapper">
+            <div class="seal" onclick="nextScreen(2)">C</div>
+        </div>
+        <p style="margin-top: 40px; font-size: 0.8rem; color: #888;">TAP THE SEAL TO OPEN</p>
+    </div>
+
+    <!-- Slide 2: Welcome -->
+    <div id="screen2" class="screen">
+        <h2 class="cursive">welcome, love</h2>
+        <p style="font-size: 0.9rem; color: #666;">a little something, just for you</p>
+        
+        <div class="polaroid-main">
+            <!-- Using prince1.jpeg -->
+            <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince1.jpeg" alt="Couple">
+        </div>
+        
+        <p style="text-align: center; font-style: italic; font-size: 0.95rem; margin-bottom: 20px;">
+            "Every hug, every quiet moment, every little 'us' — that's what this is for."
+        </p>
+
+        <button class="btn" onclick="startLetter()">OPEN THE LETTER →</button>
+    </div>
+
+    <!-- Slide 3: Letter -->
+    <div id="screen3" class="screen">
+        <h2 class="cursive">Dear Love,</h2>
+        
+        <div class="letter-container">
+            <div class="letter-header">
+                <!-- Using prince2.jpeg -->
+                <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince2.jpeg" alt="Flowers" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px; object-position: center 20%;">
+            </div>
+            <div class="letter-body" id="typewriter-text">
+                <!-- Text will be typed here -->
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="nextScreen(2)">← BACK</button>
+            <button class="btn" onclick="nextScreen(4)">NEXT →</button>
+        </div>
+    </div>
+
+    <!-- Slide 4: Scrapbook -->
+    <div id="screen4" class="screen">
+        <h2 class="cursive">every little moment, with you</h2>
+        <p style="font-size: 0.8rem; letter-spacing: 1px; color: #888; text-transform: uppercase;">Pinned, just for her</p>
+
+        <div class="scrapbook-grid">
+            <div class="polaroid-small rotate-left">
+                <!-- Using prince3.jpeg -->
+                <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince3.jpeg" alt="Memory 1">
+                <p>My Favorite</p>
+            </div>
+            <div class="polaroid-small rotate-right" style="margin-top: 20px;">
+                <!-- Using prince4.jpeg -->
+                <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince4.jpeg" alt="Memory 2">
+                <p>My Peace</p>
+            </div>
+
+            <div class="reasons-box">
+                <h3 class="cursive" style="color: var(--text-main);">Reasons Why I Love You</h3>
+                <ul>
+                    <li>You understand me like no one else</li>
+                    <li>You make me smile every day</li>
+                    <li>You're my peace in the chaos</li>
+                    <li>You're my today & all my tomorrows</li>
+                </ul>
+            </div>
+
+            <div class="polaroid-small rotate-right">
+                <!-- Using prince5.jpeg -->
+                <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince5.jpeg" alt="Memory 3">
+                <p>You + Me</p>
+            </div>
+            <div class="polaroid-small rotate-left" style="margin-top: -10px;">
+                <!-- Reusing prince1.jpeg -->
+                <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince1.jpeg" alt="Memory 4">
+                <p>The Goal</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="nextScreen(3)">← BACK</button>
+            <button class="btn" onclick="nextScreen(5)">NEXT →</button>
+        </div>
+    </div>
+
+    <!-- Slide 5: Memory Lane -->
+    <div id="screen5" class="screen">
+        <h2 class="cursive">just you and me</h2>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">through it all</p>
+        
+        <div class="polaroid-main" style="transform: rotate(1deg);">
+            <!-- Using prince4.jpeg (reused from scrapbook for focal point) -->
+            <img src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince4.jpeg" alt="Special Memory">
+        </div>
+
+        <p style="text-align: center; font-style: italic; font-size: 0.95rem; margin-top: 10px;">
+            "You are the finest, loveliest, tenderest, and most beautiful person I have ever known - and even that is an understatement."
+        </p>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="nextScreen(4)">← BACK</button>
+            <button class="btn" onclick="nextScreen(6)">NEXT →</button>
+        </div>
+    </div>
+
+    <!-- Slide 6: Final -->
+    <div id="screen6" class="screen">
+        <!-- Container for Love Animations -->
+        <div id="hearts-container" class="hearts-container"></div>
+
+        <h2 class="cursive" style="margin-top: 30px;">forever & always</h2>
+        
+        <div class="final-message">
+            <!-- Using prince5.jpeg in a circle -->
+            <img class="circle-img" src="https://ayushitrendsimages.blob.core.windows.net/ayushi-product-photos/prince5.jpeg" alt="Us">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--text-main); margin-bottom: 10px;">Happy Girlfriend's Day</h3>
+            <p style="color: #666; font-size: 0.95rem;">
+                Thank you for being my anchor, my joy, and my greatest adventure. I love you endlessly.
+            </p>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="nextScreen(5)">← BACK</button>
+            <button class="btn" onclick="nextScreen(1)">START OVER</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Navigation Logic
+    function nextScreen(screenNumber) {
+        // Hide all screens
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        
+        // Scroll back to top
+        document.querySelector('.app-container').scrollTop = 0;
+
+        // Show target screen
+        document.getElementById('screen' + screenNumber).classList.add('active');
+
+        // Trigger hearts if navigating to the final screen (Slide 6)
+        if(screenNumber === 6) {
+            triggerHearts();
+        } else {
+            // Stop hearts if navigating away
+            document.getElementById('hearts-container').innerHTML = '';
+        }
+    }
+
+    // Typewriter Effect Logic
+    const letterContent = "You have been my muse since I met you, and I am just so in love with you always. There are times when I overwhelm, there are times when we fight, but trust me, I just have so much love for you. I am sorry and I love you a lot.";
+    let i = 0;
+    let isTyping = false;
+    let typeInterval;
+
+    function startLetter() {
+        nextScreen(3);
+        
+        // Reset typewriter
+        document.getElementById("typewriter-text").innerHTML = "";
+        i = 0;
+        clearInterval(typeInterval);
+        isTyping = false;
+        
+        if(!isTyping) {
+            typeWriter();
+        }
+    }
+
+    function typeWriter() {
+        isTyping = true;
+        typeInterval = setInterval(function() {
+            if (i < letterContent.length) {
+                document.getElementById("typewriter-text").innerHTML += letterContent.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+                isTyping = false;
+            }
+        }, 40); // Speed of typing (40ms per character)
+    }
+
+    // Love Animations Logic
+    function triggerHearts() {
+        const container = document.getElementById('hearts-container');
+        container.innerHTML = ''; // Clear previous hearts to prevent lag
+        
+        const emojis = ['❤️', '💖', '💕', '✨'];
+        
+        for(let j = 0; j < 20; j++) {
+            let heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            // Pick a random emoji
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            // Random horizontal position
+            heart.style.left = Math.random() * 90 + '%';
+            // Random animation delays and durations for a natural look
+            heart.style.animationDelay = (Math.random() * 2) + 's';
+            heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+            // Random font sizes
+            heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+            
+            container.appendChild(heart);
+        }
+    }
+</script>
+
+</body>
+</html>
